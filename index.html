@@ -1,0 +1,223 @@
+
+<html>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-GZ1RIgZaSc8rnco/8CXfRdCpDxRCphenIiZ2ztLy3XQfCbQUSCuk8IudvNHxkRA3oUg6q0qejgN/qqyG1duv5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<section>
+	<h1>Angular and React JS Compiler</h1>
+	<br>
+	<div>
+		<button class="button" onclick="compile();">Run</button>
+		<button class="button" onclick="remove();" title="Kindly Delete After each Compilation">Delete Output</button>
+	</div>
+	
+	
+	  <h3>You can code fully in HTML text area or Seperately in each text area. </h3>
+	
+  </section>
+<div id='container'>
+  <div id="html" data-text="HTML">
+  </div>
+  <div id="css">
+  </div>
+</div>
+<br>
+<div id='container'>
+  
+  <div id="js">
+  </div>
+  
+  <div id="rjs">
+  </div>  
+</div>
+
+</body>
+</html>
+<style>
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+h1{
+  font-family: 'Source Sans Pro', sans-serif;
+  text-align: center;
+  color: #777;
+  margin: 0;
+  font-weight: 200;
+}
+
+section {
+  background: #fff;
+  width: 100%;
+  min-height: 100px;
+  padding: 5px;
+  margin: 0;
+  position: relative;
+}
+
+.clearLink {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+  
+
+.button:hover {
+  background: #f0f0f0;
+  color : black;
+}
+
+.header {
+  padding: 20px;
+  text-align: left-side;
+  background: #000000;
+  color: black;
+  font-size: 30px;
+}
+.clearLink:hover {
+  background: #f0f0f0;
+  color : black;
+}
+
+#html,#js,#css,#rjs{
+    height: 300px;
+    width:49%;
+    display:inline-block;
+	bg-color:black;
+}
+
+#container {
+	height:300px;
+	width:100%;
+  white-space : nowrap; 
+  overflow : hidden;
+  position:relative;
+}
+iframe {
+  width: 100%;
+  overflow: scroll;
+    height: 100%;
+    border: 1px solid black;
+  margin: 15px 0;
+   border: 2px solid #000000;
+  border-radius: 1px;
+  min-height: 600px;
+  margin: 15px 0 0 0;
+}
+
+/* disable tag matching */
+.ace_editor .ace_marker-layer .ace_bracket { display: none }
+
+</style>
+<script>
+
+
+function compile() {
+    var newIframe = document.createElement('iframe');
+	newIframe.setAttribute('id','iframe');
+	newIframe.setAttribute('class','panel');
+	newIframe.width = '200';newIframe.height = '200';
+	newIframe.src = 'about:blank'; 
+	document.body.appendChild(newIframe);
+
+	newIframe.contentWindow.document.open('text/html', 'replace');
+	newIframe.contentWindow.document.write("<scr"+"ipt src='https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js'></scr"+"ipt>");
+	newIframe.contentWindow.document.write(html.getValue()+"<style>"+css.getValue()+"</style>"+"<scr"+"ipt>"+js.getValue()+"</scr"+"ipt>"+"<scr"+"ipt type='text/babel'>"+rjs.getValue()+"</scr"+"ipt>");
+	newIframe.contentWindow.document.close();
+  }
+  function remove(){
+ var frame = document.getElementById("iframe");
+ frame.parentNode.removeChild(frame);
+ remove();
+}
+function setupEditorhtml()
+{
+  window.html = ace.edit("html");
+  html.setTheme("ace/theme/iplastic");
+  html.getSession().setMode("ace/mode/html");
+  html.focus();
+  
+  html.setOptions({
+    fontSize: "14pt",
+    showLineNumbers:false,
+    showGutter: false,
+    vScrollBarAlwaysVisible:true,
+    enableBasicAutocompletion: false, enableLiveAutocompletion: false
+  });
+    html.setValue("<!DOCTYPE html><html>\n<head>\n</head>\n<body>\n\n\n\n</body>\n</html>\n"+"\n<scr"+"ipt src='https://unpkg.com/react@16/umd/react.production.min.js'>"+"</scr"+"ipt>"+"\n<scr"+"ipt src='https://unpkg.com/react-dom@16/umd/react-dom.production.min.js'>"+"</scr"+"ipt>"+"\n<scr"+"ipt src='https://unpkg.com/babel-standalone@6.15.0/babel.min.js'>"+"</scr"+"ipt>",1);
+  html.setShowPrintMargin(false);
+  html.setBehavioursEnabled(false);
+}
+function setupEditorcss()
+{
+  window.css = ace.edit("css");
+  css.setTheme("ace/theme/iplastic");
+  css.getSession().setMode("ace/mode/css");
+
+  css.setOptions({
+    fontSize: "14pt",
+    showLineNumbers:false,
+    showGutter: false,
+    vScrollBarAlwaysVisible:true,
+    enableBasicAutocompletion: false, enableLiveAutocompletion: false
+  });
+
+  css.setShowPrintMargin(false);
+  css.setBehavioursEnabled(false);
+}
+function setupEditorjs()
+{
+  window.js = ace.edit("js");
+  js.setTheme("ace/theme/iplastic");
+  js.getSession().setMode("ace/mode/javascript");
+ 
+  js.setOptions({
+    fontSize: "14pt",
+    showLineNumbers:false,
+    showGutter: false,
+    vScrollBarAlwaysVisible:true,
+    enableBasicAutocompletion: false, enableLiveAutocompletion: false
+  });
+  js.setShowPrintMargin(false);
+  js.setBehavioursEnabled(false);
+}
+function setupEditorrjs()
+{
+  window.rjs = ace.edit("rjs");
+  rjs.setTheme("ace/theme/iplastic");
+  rjs.getSession().setMode("ace/mode/javascript");
+
+  rjs.setOptions({
+    fontSize: "14pt",
+    showLineNumbers:false,
+    showGutter: false,
+    vScrollBarAlwaysVisible:true,
+    enableBasicAutocompletion: false, enableLiveAutocompletion: false
+  });
+
+  rjs.setShowPrintMargin(false);
+  rjs.setBehavioursEnabled(false);
+}
+
+setupEditorhtml();
+setupEditorcss();
+setupEditorjs();
+setupEditorrjs();
+
+
+
+  
+</script>
+</html>
